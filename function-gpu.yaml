@@ -1,0 +1,54 @@
+apiVersion: nuclio.io/v1
+kind: Function
+metadata:
+  name: yolov11-detection
+  namespace: cvat
+  annotations:
+    name: YOLOv11 Detection
+    type: detector
+    framework: pytorch
+    spec: |
+      [
+        { "id": 0, "name": "person", "type": "rectangle" },
+        { "id": 1, "name": "car", "type": "rectangle" },
+        { "id": 2, "name": "dog", "type": "rectangle" }
+      ]
+spec:
+  description: YOLOv11 object detection model
+  runtime: python:3.9
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.pth.ultralytics.yolov11
+    baseImage: ultralytics/ultralytics:latest
+    commands:
+      - pip install scikit-image supervision
+    env:
+    - name: MODEL_PATH
+      value: "/mnt/models/yolo11.pt"
+    directives:
+      preCopy:
+        - kind: USER
+          value: root
+        - kind: RUN
+          value: apt update && apt install --no-install-recommends -y libglib2.0-0
+        - kind: RUN
+          value: pip install supervision ultralytics
+        - kind: WORKDIR
+          value: /opt/nuclio
+  triggers:
+    myHttpTrigger:
+      maxWorkers: 1
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432 # 32MB
+  resources:
+    limits:
+      nvidia.com/gpu: 1
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume
