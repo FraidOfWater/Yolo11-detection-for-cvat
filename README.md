@@ -29,6 +29,7 @@ Create this folder path: "cvat/serverless/pytorch/ultralytics/yolo11" and downlo
 You must cd into your cvat folder in WSL so that the serverless folder is exposed, and run this command.
 ```
 wsl -d ubuntu
+cd wherever your cvat is installed, so that it exposes serverless folder.
 ./serverless/deploy_gpu.sh serverless/pytorch/ultralytics/yolo11
 ```
 It should build and be available inside ai tools, detector.
