@@ -26,6 +26,7 @@ sudo ln -sf $(pwd)/nuctl-1.13.0-linux-amd64 /usr/local/bin/nuctl
 ```
 # SERVERLESS
 Create this folder path: "cvat/serverless/pytorch/ultralytics/yolo11" and download the files into it. You also need the yolo model, for example: "yolo11n.pt" from their site. Put it inside the yolo11 folder like the other files.
+You must rename it to "best.pt". It will be copied to the docker opt/nuclio folder, from which main.py will load it from.
 You must cd into your cvat folder in WSL so that the serverless folder is exposed, and run this command.
 ```
 wsl -d ubuntu
