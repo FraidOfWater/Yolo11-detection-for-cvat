@@ -1,5 +1,5 @@
 # Yolo11-detection-for-cvat
-Yolo11 detection for cvat
+Yolo11 detection model for cvat.
 
 # WSL
 ```
@@ -25,9 +25,11 @@ sudo ln -sf ${pwd}/nuctl-1.13.0-linux-amd64 /usr/local/bin/nuctl
 sudo ln -sf $(pwd)/nuctl-1.13.0-linux-amd64 /usr/local/bin/nuctl
 ```
 # SERVERLESS
-Put the files into serverless/pytorch/...
-You must cd into your cvat folder in WSL so that the serverless folder is exposed.
+Create this folder path: "cvat/serverless/pytorch/ultralytics/yolo11" and download the files into it. You also need the yolo model, for example: "yolo11n.pt" from their site. Put it inside the yolo11 folder like the other files.
+You must cd into your cvat folder in WSL so that the serverless folder is exposed, and run this command.
 ```
 wsl -d ubuntu
 ./serverless/deploy_gpu.sh serverless/pytorch/ultralytics/yolo11
 ```
+It should build and be available inside ai tools, detector.
+Note: You must edit function-gpu.yaml and set your labels. Just copy whatever is inside your data.yaml you trained from. If it doesnt work, tr to remove "type" from the dictionaries.
