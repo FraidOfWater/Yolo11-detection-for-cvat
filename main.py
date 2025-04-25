@@ -7,7 +7,7 @@ from ultralytics import YOLO
 
 def init_context(context):
     context.logger.info("Initializing model...")
-    model = YOLO("yolo11n.pt")  # Replace with your model path
+    model = YOLO(r"/opt/nuclio/best.pt")  # Replace with your model path
     context.user_data.model = model
     context.logger.info("Model initialized.")
 
